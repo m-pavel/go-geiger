@@ -13,14 +13,14 @@ type RadiationService struct {
 	g *geiger.GeigerCounter
 }
 type Request struct {
-	Radiation float32 `json:"radiation"`
+	Radiation int64 `json:"radiation"`
 }
 
 func (ts RadiationService) PrepareCommandLineParams() {}
 func (ts RadiationService) Name() string              { return "geiger" }
 
 func (ts *RadiationService) Init(client MQTT.Client, topic, topicc, topica string, debug bool) error {
-	ts.g = &geiger.GeigerCounter{}
+	ts.g = geiger.New()
 	return ts.g.Init(12)
 }
 
@@ -33,6 +33,7 @@ func (ts RadiationService) Do(client MQTT.Client) (interface{}, error) {
 }
 
 func (ts RadiationService) Close() error {
+	ts.g.Close()
 	return nil
 }
 
