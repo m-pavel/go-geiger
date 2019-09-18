@@ -26,7 +26,7 @@ func (ts *RadiationService) PrepareCommandLineParams() {
 
 func (ts RadiationService) Name() string { return "geiger" }
 
-func (ts *RadiationService) Init(client MQTT.Client, topic, topicc, topica string, debug bool) error {
+func (ts *RadiationService) Init(client MQTT.Client, topic, topicc, topica string, debug bool, ss ghm.SendState) error {
 	ts.g = geiger.New(debug)
 	return ts.g.Init(*ts.pin)
 }
