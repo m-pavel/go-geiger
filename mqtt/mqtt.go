@@ -31,7 +31,7 @@ func (ts *RadiationService) Init(client MQTT.Client, topic, topicc, topica strin
 	return ts.g.Init(*ts.pin)
 }
 
-func (ts RadiationService) Do(client MQTT.Client) (interface{}, error) {
+func (ts RadiationService) Do() (interface{}, error) {
 	return &Request{CountPerMinute: ts.g.PerMinute(), CountPerHour: ts.g.PerHour(), Value: ts.g.Radiation()}, nil
 }
 
