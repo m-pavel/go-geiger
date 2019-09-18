@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	_ "net/http"
 	_ "net/http/pprof"
 
@@ -10,26 +11,28 @@ import (
 )
 
 type RadiationService struct {
-	g *geiger.GeigerCounter
+	g   *geiger.GeigerCounter
+	pin *int
 }
 type Request struct {
-	Radiation int64 `json:"radiation"`
+	CountPerMinute int64   `json:"per_min"`
+	CountPerHour   int64   `json:"per_hour"`
+	Value          float64 `json:"value"`
 }
 
-func (ts RadiationService) PrepareCommandLineParams() {}
-func (ts RadiationService) Name() string              { return "geiger" }
+func (ts *RadiationService) PrepareCommandLineParams() {
+	ts.pin = flag.Int("pin", 18, "GPIO data pin")
+}
+
+func (ts RadiationService) Name() string { return "geiger" }
 
 func (ts *RadiationService) Init(client MQTT.Client, topic, topicc, topica string, debug bool) error {
 	ts.g = geiger.New()
-	return ts.g.Init(12)
+	return ts.g.Init(*ts.pin)
 }
 
 func (ts RadiationService) Do(client MQTT.Client) (interface{}, error) {
-	v, err := ts.g.Read()
-	if err != nil {
-		return nil, err
-	}
-	return &Request{Radiation: v}, nil
+	return &Request{CountPerMinute: ts.g.PerMinute(), CountPerHour: ts.g.PerHour(), Value: ts.g.Radiation()}, nil
 }
 
 func (ts RadiationService) Close() error {
