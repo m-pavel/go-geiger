@@ -30,8 +30,7 @@ func New(debug bool) *GeigerCounter {
 }
 
 func (g *GeigerCounter) Init(pinid int) error {
-	err := rpio.Open()
-	if err != nil {
+	if err := rpio.Open(); err != nil {
 		return err
 	}
 	g.pin = rpio.Pin(pinid)
