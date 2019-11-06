@@ -24,7 +24,7 @@ func main() {
 	if err := pin.Halt(); err != nil {
 		log.Fatal(err)
 	}
-	if err := pin.In(gpio.PullNoChange, gpio.FallingEdge); err != nil {
+	if err := pin.In(gpio.PullNoChange, gpio.RisingEdge); err != nil {
 		log.Fatal(err)
 	}
 	fmt.Println(pin.Function())
@@ -35,8 +35,4 @@ func main() {
 		time.Sleep(100 * time.Millisecond)
 	}
 
-	//p := sysfs.Pin{number: 42, name: "foo", root: "/tmp/gpio/priv/"}
-	//if l := p.Read(); l != gpio.Low {
-	//	t.Fatal("broken pin is always low")
-	//}
 }
