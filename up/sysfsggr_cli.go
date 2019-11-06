@@ -3,9 +3,9 @@ package main
 import (
 	"log"
 
-	"fmt"
-
 	"time"
+
+	"fmt"
 
 	"periph.io/x/periph/conn/gpio"
 	"periph.io/x/periph/host"
@@ -18,6 +18,8 @@ func main() {
 	}
 	sysfs.Pins[402].In(gpio.PullNoChange, gpio.RisingEdge)
 	for i := 0; i < 50; i++ {
+		res := sysfs.Pins[402].WaitForEdge(time.Minute)
+		fmt.Println(res)
 		fmt.Println(sysfs.Pins[402].Read())
 		time.Sleep(500 * time.Millisecond)
 	}
