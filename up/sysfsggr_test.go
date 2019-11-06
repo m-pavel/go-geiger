@@ -1,16 +1,14 @@
-package sysfsggr
+package main
 
 import (
-	"log"
-	"testing"
-
 	"fmt"
+	"log"
 
-	"github.com/google/periph/host"
-	"github.com/google/periph/host/sysfs"
+	"periph.io/x/periph/host"
+	"periph.io/x/periph/host/sysfs"
 )
 
-func Test1(t *testing.T) {
+func main() {
 	if _, err := host.Init(); err != nil {
 		log.Fatal(err)
 	}

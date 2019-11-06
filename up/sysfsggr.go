@@ -1,4 +1,4 @@
-package sysfsggr
+package main
 
 // GeigerCounter object
 type SysfsCounter struct {
