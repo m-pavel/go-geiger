@@ -16,8 +16,14 @@ func main() {
 	if s, err := host.Init(); err != nil {
 		log.Fatal(err)
 	} else {
-		log.Println(s)
+		for _, d := range s.Loaded {
+			_, err = d.Init()
+			if err != nil {
+				log.Println(err)
+			}
+		}
 	}
+
 	pin := sysfs.Pins[402]
 
 	if err := pin.Halt(); err != nil {
