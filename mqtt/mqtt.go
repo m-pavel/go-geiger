@@ -7,11 +7,12 @@ import (
 
 	MQTT "github.com/eclipse/paho.mqtt.golang"
 	"github.com/m-pavel/go-geiger/pkg"
+	"github.com/m-pavel/go-geiger/rpi"
 	"github.com/m-pavel/go-hassio-mqtt/pkg"
 )
 
 type RadiationService struct {
-	g   *geiger.GeigerCounter
+	g   geiger.GeigerCounter
 	pin *int
 	dev *string
 }
@@ -29,7 +30,7 @@ func (ts *RadiationService) PrepareCommandLineParams() {
 func (ts RadiationService) Name() string { return "geiger" }
 
 func (ts *RadiationService) Init(client MQTT.Client, topic, topicc, topica string, debug bool, ss ghm.SendState) error {
-	ts.g = geiger.New(debug)
+	ts.g = rpi.New(debug)
 	return ts.g.Init(*ts.pin)
 }
 

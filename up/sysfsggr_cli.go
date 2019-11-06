@@ -14,8 +14,8 @@ import (
 )
 
 func main() {
+	//gpiotest()
 	gpiotest()
-
 }
 
 func gpiotest() {
@@ -73,7 +73,7 @@ func fstest() {
 		}
 	}()
 
-	err = watcher.Add("/sys/class/gpio/gpio402/value")
+	err = watcher.Add("/sys/class/gpio/gpio405/value")
 	if err != nil {
 		log.Fatal(err)
 	}
