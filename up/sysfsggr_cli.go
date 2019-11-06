@@ -7,8 +7,7 @@ import (
 
 	"fmt"
 
-	"os"
-
+	"github.com/fsnotify/fsnotify"
 	"periph.io/x/periph/conn/gpio"
 	"periph.io/x/periph/host"
 	"periph.io/x/periph/host/sysfs"
@@ -47,15 +46,36 @@ func gpiotest() {
 }
 
 func fstest() {
-	f, err := os.Open("/sys/class/gpio/gpio402/value")
+	watcher, err := fsnotify.NewWatcher()
 	if err != nil {
 		log.Fatal(err)
 	}
-	bt := make([]byte, 1)
-	for i := 0; i < 1000000; i++ {
-		f.Seek(0, 0)
-		f.Read(bt)
-		fmt.Printf("%d ", bt[0])
+	defer watcher.Close()
+
+	done := make(chan bool)
+	go func() {
+		for {
+			select {
+			case event, ok := <-watcher.Events:
+				if !ok {
+					return
+				}
+				log.Println("event:", event)
+				if event.Op&fsnotify.Write == fsnotify.Write {
+					log.Println("modified file:", event.Name)
+				}
+			case err, ok := <-watcher.Errors:
+				if !ok {
+					return
+				}
+				log.Println("error:", err)
+			}
+		}
+	}()
+
+	err = watcher.Add("/sys/class/gpio/gpio402/value")
+	if err != nil {
+		log.Fatal(err)
 	}
-	f.Close()
+	<-done
 }
