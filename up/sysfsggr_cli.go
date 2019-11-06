@@ -7,6 +7,7 @@ import (
 
 	"time"
 
+	"periph.io/x/periph/conn/gpio"
 	"periph.io/x/periph/host"
 	"periph.io/x/periph/host/sysfs"
 )
@@ -15,6 +16,7 @@ func main() {
 	if _, err := host.Init(); err != nil {
 		log.Fatal(err)
 	}
+	sysfs.Pins[402].In(gpio.PullNoChange, gpio.FallingEdge)
 	for i := 0; i < 50; i++ {
 		fmt.Println(sysfs.Pins[402].Read())
 		time.Sleep(500 * time.Millisecond)
