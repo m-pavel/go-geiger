@@ -25,7 +25,7 @@ func gpiotest() {
 		log.Println(s)
 	}
 
-	pin := sysfs.Pins[402]
+	pin := sysfs.Pins[405]
 
 	if err := pin.Halt(); err != nil {
 		log.Fatal(err)
