@@ -15,7 +15,7 @@ import (
 
 func main() {
 	//gpiotest()
-	gpiotest()
+	fstest()
 }
 
 func gpiotest() {
