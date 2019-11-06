@@ -26,8 +26,8 @@ func main() {
 	}
 	for i := 0; i < 50; i++ {
 		fmt.Println(pin.Read())
-		//res := pin.WaitForEdge(time.Second * 10)
-		//fmt.Println(res)
+		res := pin.WaitForEdge(time.Second * 10)
+		fmt.Println(res)
 		time.Sleep(100 * time.Millisecond)
 	}
 
