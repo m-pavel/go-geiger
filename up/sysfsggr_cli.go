@@ -17,10 +17,11 @@ func main() {
 		log.Fatal(err)
 	}
 	pin := sysfs.Pins[402]
-	if err := pin.In(gpio.PullNoChange, gpio.FallingEdge); err != nil {
+
+	if err := pin.Halt(); err != nil {
 		log.Fatal(err)
 	}
-	if err := pin.Halt(); err != nil {
+	if err := pin.In(gpio.PullNoChange, gpio.FallingEdge); err != nil {
 		log.Fatal(err)
 	}
 	for i := 0; i < 50; i++ {
