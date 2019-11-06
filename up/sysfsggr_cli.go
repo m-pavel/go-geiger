@@ -14,8 +14,8 @@ import (
 )
 
 func main() {
-	//gpiotest()
-	fstest()
+	gpiotest()
+	//fstest()
 }
 
 func gpiotest() {
@@ -38,9 +38,9 @@ func gpiotest() {
 		log.Fatal(err)
 	}
 	for i := 0; i < 500; i++ {
-		fmt.Println(pin.Read())
-		//res := pin.WaitForEdge(time.Second * 10)
-		//fmt.Println(res)
+		//fmt.Println(pin.Read())
+		res := pin.WaitForEdge(time.Second * 10)
+		fmt.Println(res)
 		time.Sleep(10 * time.Millisecond)
 	}
 }
