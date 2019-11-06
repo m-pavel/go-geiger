@@ -52,7 +52,7 @@ func fstest() {
 		log.Fatal(err)
 	}
 	bt := make([]byte, 1)
-	for i := 0; i < 1000; i++ {
+	for i := 0; i < 1000000; i++ {
 		f.Seek(0, 0)
 		f.Read(bt)
 		fmt.Printf("%d ", bt[0])
