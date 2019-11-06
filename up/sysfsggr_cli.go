@@ -21,7 +21,7 @@ func main() {
 	if err := pin.Halt(); err != nil {
 		log.Fatal(err)
 	}
-	if err := pin.In(gpio.PullNoChange, gpio.FallingEdge); err != nil {
+	if err := pin.In(gpio.PullNoChange, gpio.NoEdge); err != nil {
 		log.Fatal(err)
 	}
 	fmt.Println(pin.Function())
