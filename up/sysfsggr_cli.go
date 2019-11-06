@@ -22,7 +22,7 @@ func main() {
 	}
 	for i := 0; i < 50; i++ {
 		fmt.Println(pin.Read())
-		res := pin.WaitForEdge(time.Minute)
+		res := pin.WaitForEdge(time.Second * 10)
 		fmt.Println(res)
 		fmt.Println(sysfs.Pins[402].Read())
 		time.Sleep(500 * time.Millisecond)
