@@ -12,7 +12,7 @@ func main() {
 	if _, err := host.Init(); err != nil {
 		log.Fatal(err)
 	}
-	fmt.Println(sysfs.Pins)
+	fmt.Println(sysfs.Pins[402])
 	//p := sysfs.Pin{number: 42, name: "foo", root: "/tmp/gpio/priv/"}
 	//if l := p.Read(); l != gpio.Low {
 	//	t.Fatal("broken pin is always low")
