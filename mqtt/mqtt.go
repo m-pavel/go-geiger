@@ -13,6 +13,7 @@ import (
 type RadiationService struct {
 	g   *geiger.GeigerCounter
 	pin *int
+	dev *string
 }
 type Request struct {
 	CountPerMinute int64   `json:"per_min"`
@@ -22,6 +23,7 @@ type Request struct {
 
 func (ts *RadiationService) PrepareCommandLineParams() {
 	ts.pin = flag.Int("pin", 18, "GPIO data pin")
+	ts.dev = flag.String("dev", "/dev/", "GPIO device")
 }
 
 func (ts RadiationService) Name() string { return "geiger" }
