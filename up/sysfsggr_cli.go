@@ -20,6 +20,9 @@ func main() {
 	if err := pin.In(gpio.PullNoChange, gpio.FallingEdge); err != nil {
 		log.Fatal(err)
 	}
+	if err := pin.Halt(); err != nil {
+		log.Fatal(err)
+	}
 	for i := 0; i < 50; i++ {
 		fmt.Println(pin.Read())
 		//res := pin.WaitForEdge(time.Second * 10)
