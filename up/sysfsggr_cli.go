@@ -13,8 +13,10 @@ import (
 )
 
 func main() {
-	if _, err := host.Init(); err != nil {
+	if s, err := host.Init(); err != nil {
 		log.Fatal(err)
+	} else {
+		log.Println(s)
 	}
 	pin := sysfs.Pins[402]
 
