@@ -7,7 +7,6 @@ import (
 
 	"fmt"
 
-	MQTT "github.com/eclipse/paho.mqtt.golang"
 	"github.com/m-pavel/go-geiger/pkg"
 	"github.com/m-pavel/go-geiger/rpi"
 	"github.com/m-pavel/go-geiger/up"
@@ -15,6 +14,7 @@ import (
 )
 
 type RadiationService struct {
+	ghm.NonListerningService
 	g   geiger.GeigerCounter
 	pin *int
 	typ *string
@@ -32,11 +32,11 @@ func (ts *RadiationService) PrepareCommandLineParams() {
 
 func (ts RadiationService) Name() string { return "geiger" }
 
-func (ts *RadiationService) Init(client MQTT.Client, topic, topicc, topica string, debug bool, ss ghm.SendState) error {
+func (ts *RadiationService) Init(ctx *ghm.ServiceContext) error {
 	if *ts.typ == "rpi" {
-		ts.g = rpi.New(geiger.J305, debug)
+		ts.g = rpi.New(geiger.J305, ctx.Debug())
 	} else if *ts.typ == "up" {
-		ts.g = sysfs.New(geiger.J305, debug)
+		ts.g = sysfs.New(geiger.J305, ctx.Debug())
 	} else {
 		return fmt.Errorf("Wrong board type %s", *ts.typ)
 	}
